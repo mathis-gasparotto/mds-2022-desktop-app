@@ -1,0 +1,24 @@
+{
+  "name": "mds-2022-desktop-app",
+  "version": "1.0.0",
+  "description": "First Desktop App -- with Electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . -v --log-level=3",
+    "start:watch": "npx electromon .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Mathis-Gasparotto/mds-2022-desktop-app.git"
+  },
+  "author": "Mathis Gasparotto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mathis-Gasparotto/mds-2022-desktop-app/issues"
+  },
+  "homepage": "https://github.com/Mathis-Gasparotto/mds-2022-desktop-app#readme",
+  "devDependencies": {
+    "electron": "^25.1.0"
+  }
+}
