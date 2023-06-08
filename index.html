@@ -1,20 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <meta
-      http-equiv="X-Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'"
-    />
-    <title>Hello from Electron renderer!</title>
-  </head>
-  <body>
-    <h1>Hello from Electron renderer!</h1>
-    <p>👋</p>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+  <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+  <title>Hello from Electron renderer!</title>
+  <link rel="stylesheet" href="bootstrap/bootstrap.css">
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body class="body d-flex justify-content-center align-items-center">
+  <div class="container">
+    <div class="row">
+      <ul class="col-sm-3 text-center" id="todos">
+        <li class="todo">Level 1: .col-sm-3</li>
+        <li class="todo">Level 1: .col-sm-3</li>
+        <li class="todo">Level 1: .col-sm-3</li>
+        <li class="todo">Level 1: .col-sm-3</li>
+        <li class="todo">Level 1: .col-sm-3</li>
+        <li class="todo">Level 1: .col-sm-3</li>
+      </ul>
+      <div class="col-sm-9">
+        <div class="row">
+          <form class="form m-auto" id="create-todo-form">
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" class="form-control" id="title">
+            </div>
+            <div class="mb-3">
+              <label for="floatingTextarea">Comments</label>
+              <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+            </div>
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="important">
+              <label class="form-check-label" for="important">Important</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="index.js"></script>
+  <script src="bootstrap/bootstrap.js"></script>
+</body>
+
 </html>
