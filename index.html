@@ -6,38 +6,37 @@
   <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
   <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
-  <title>Hello from Electron renderer!</title>
+  <title>My first Desktop App !!</title>
   <link rel="stylesheet" href="bootstrap/bootstrap.css">
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="style/main.css">
 </head>
 
 <body class="body d-flex justify-content-center align-items-center">
-  <div class="main w-100">
-    <div class="row w-100">
-      <ul class="col-sm-3 text-center" id="todos">
-      </ul>
-      <div class="col-sm-9">
-        <div class="row">
-          <form class="form m-auto" id="create-todo-form">
-            <div class="mb-3">
-              <label for="title" class="form-label">Title</label>
-              <input type="text" class="form-control" value="Oui" id="title">
-            </div>
-            <div class="mb-3">
-              <label for="floatingTextarea">Comments</label>
-              <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea">Oui</textarea>
-            </div>
-            <div class="mb-3">
-              <label for="datetime" class="form-label">Date</label>
-              <input type="datetime-local" class="form-control" id="datetime" value="2023-06-24T17:39">
-            </div>
-            <div class="mb-3 form-check">
-              <input type="checkbox" class="form-check-input" id="important">
-              <label class="form-check-label" for="important">Important</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
+  <div class="main w-100 d-flex flex-row">
+    <ul class="ml-3" id="todos">
+    </ul>
+    <div class="col-sm-9">
+      <h1 class="text-center my-5">Todos</h1>
+      <div class="row">
+        <form class="form m-auto" id="create-todo-form">
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" value="Oui" id="title">
+          </div>
+          <div class="mb-3">
+            <label for="floatingTextarea">Comments</label>
+            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea">Oui</textarea>
+          </div>
+          <div class="mb-3">
+            <label for="datetime" class="form-label">Date</label>
+            <input type="datetime-local" class="form-control" id="datetime" value="2023-06-24T17:39">
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="important">
+            <label class="form-check-label" for="important">Important</label>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
     </div>
   </div>

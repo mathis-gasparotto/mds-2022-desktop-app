@@ -1,0 +1,25 @@
+#todos {
+  list-style: none;
+  border-right: solid 1px #ccc;
+  height: 100vh;
+  width: 300px;
+  margin: 0;
+  overflow-y: auto;
+}
+
+.todo {
+  padding: 5px 0;
+  &.important {
+    color: red;
+    font-weight: bold;
+  }
+
+  &.completed {
+    text-decoration: line-through;
+  }
+
+  .delete-btn {
+    font-size: 0.8rem;
+    margin-left: 10px;
+  }
+}

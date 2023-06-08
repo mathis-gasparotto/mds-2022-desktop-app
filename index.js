@@ -1,8 +1,7 @@
 addEventListener('DOMContentLoaded', () => {
-  event.preventDefault()
-
-  let todos = [
+  var todos = [
     {
+      id: 1,
       title: 'Test',
       content: '',
       datetime: new Date(),
@@ -10,6 +9,7 @@ addEventListener('DOMContentLoaded', () => {
       completed: false
     },
     {
+      id: 2,
       title: 'Test',
       content: '',
       datetime: new Date(),
@@ -17,6 +17,7 @@ addEventListener('DOMContentLoaded', () => {
       completed: false
     },
     {
+      id: 3,
       title: 'Test',
       content: '',
       datetime: new Date(),
@@ -24,6 +25,7 @@ addEventListener('DOMContentLoaded', () => {
       completed: false
     },
     {
+      id: 4,
       title: 'Test',
       content: '',
       datetime: new Date(),
@@ -31,6 +33,7 @@ addEventListener('DOMContentLoaded', () => {
       completed: false
     },
     {
+      id: 5,
       title: 'Test',
       content: '',
       datetime: new Date(),
@@ -41,9 +44,11 @@ addEventListener('DOMContentLoaded', () => {
 
   const todoList = document.getElementById('todos')
 
-  todos.forEach(todo => {
+  todos.forEach((todo) => {
     printTodo(todo)
   })
+
+  // ********** EVENT LISTENERS ********** //
 
   const form = document.getElementById('create-todo-form')
   form.addEventListener('submit', (event) => {
@@ -55,8 +60,26 @@ addEventListener('DOMContentLoaded', () => {
     event.target[3].checked = false
   })
 
+  const deleteBtns = document.querySelectorAll('.delete-btn')
+  deleteBtns.forEach((btn) => {
+    deleteTodoAddEvent(btn)
+  })
+
+
+
+  // ********** FUNCTIONS ********** //
+
+  function deleteTodoAddEvent(btn) {
+    btn.addEventListener('click', (event) => {
+      const id = parseInt(event.target.id.replace('delete-todo-', ''))
+      deleteTodo(id)
+      console.log(id)
+    })
+  }
+
   function addTodo(title, content, datetime, important, completed = false) {
     const todo = {
+      id: getLastTodo().id + 1,
       title,
       content,
       datetime,
@@ -67,11 +90,26 @@ addEventListener('DOMContentLoaded', () => {
     printTodo(todo)
   }
 
+  function deleteTodo(todoId) {
+    todos = todos.filter((e) => e.id !== todoId)
+    unPrintTodo(todoId)
+  }
+
+  function unPrintTodo(todoId) {
+    document.getElementById(`todo-${todoId}`).remove()
+  }
+
   function printTodo(todoObject) {
     const todo = document.createElement('li')
     const delBtn = document.createElement('button')
+    delBtn.innerText = 'Delete'
     delBtn.classList.add('btn')
     delBtn.classList.add('btn-danger')
+    delBtn.classList.add('delete-btn')
+    delBtn.classList.add('delete-btn')
+    delBtn.setAttribute('id', `delete-todo-${todoObject.id}`)
+    deleteTodoAddEvent(delBtn)
+    todo.setAttribute('id', `todo-${todoObject.id}`)
     todo.innerText = todoObject.title
     todo.appendChild(delBtn)
     todo.classList.add('todo')
@@ -79,5 +117,8 @@ addEventListener('DOMContentLoaded', () => {
     if (todoObject.important) todo.classList.add('important')
     todoList.appendChild(todo)
   }
-  
+
+  function getLastTodo() {
+    return todos[todos.length - 1]
+  }
 })
