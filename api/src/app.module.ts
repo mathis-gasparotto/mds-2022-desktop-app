@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { UsersModule } from './users/users.module'
+import { TokenController } from './token/token.controller'
+import { PizzasModule } from './pizzas/pizzas.module'
+import { EventsGateway } from './gateway/events/events.gateway'
 import { TodosModule } from './todos/todos.module'
 
 @Module({
@@ -16,9 +20,11 @@ import { TodosModule } from './todos/todos.module'
       autoLoadEntities: true,
       synchronize: true
     }),
+    UsersModule,
+    PizzasModule,
     TodosModule
   ],
-  controllers: [AppController],
-  providers: [AppService]
+  controllers: [AppController, TokenController],
+  providers: [AppService, EventsGateway]
 })
 export class AppModule {}

@@ -21,7 +21,7 @@ export class TodosController {
 
   @ApiOperation({ description: 'Get all Todos' })
   @ApiCreatedResponse({
-    description: 'The record has been successfully created.'
+    description: 'The record has been successfully got.'
   })
   @Get()
   findAll() {
@@ -30,7 +30,7 @@ export class TodosController {
 
   @ApiOperation({ description: 'Get a Todo' })
   @ApiCreatedResponse({
-    description: 'The record has been successfully created.'
+    description: 'The record has been successfully got.'
   })
   @Get(':id')
   findOne(@Param('id') id: string) {
@@ -39,7 +39,7 @@ export class TodosController {
 
   @ApiOperation({ description: 'Update a Todo' })
   @ApiCreatedResponse({
-    description: 'The record has been successfully created.',
+    description: 'The record has been successfully updated.',
     type: UpdateTodoDto
   })
   @Put(':id')
@@ -49,7 +49,7 @@ export class TodosController {
 
   @ApiOperation({ description: 'Delete a Todo' })
   @ApiCreatedResponse({
-    description: 'The record has been successfully created.'
+    description: 'The record has been successfully deleted.'
   })
   @Delete(':id')
   remove(@Param('id') id: string) {

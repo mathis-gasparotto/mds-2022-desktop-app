@@ -11,10 +11,10 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())
 
   const config = new DocumentBuilder()
-    .setTitle('Todo API')
-    .setDescription('The Todo API description')
+    .setTitle('Pizza API')
+    .setDescription('The Pizza API description')
     .setVersion('1.0')
-    .addTag('todos')
+    .addTag('pizzas')
     .build()
 
   const document = SwaggerModule.createDocument(app, config)
