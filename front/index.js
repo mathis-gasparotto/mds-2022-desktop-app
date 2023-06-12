@@ -1,10 +1,8 @@
+import { addTodo, deleteTodoAddEvent, getTodos, printTodo } from './services/todoService.js'
+
 addEventListener('DOMContentLoaded', async () => {
-  const apiUrl = 'http://localhost:3000'
+  const todos = await getTodos()
 
-  const promise = await fetch(`${apiUrl}/todos`)
-  var todos = await promise.json()
-
-  const alerts = document.getElementById('alerts')
 
   // var todos = [
   //   {
@@ -49,8 +47,6 @@ addEventListener('DOMContentLoaded', async () => {
   //   }
   // ]
 
-  const todoList = document.getElementById('todos')
-
   todos.forEach((todo) => {
     printTodo(todo)
   })
@@ -60,143 +56,20 @@ addEventListener('DOMContentLoaded', async () => {
   const form = document.getElementById('create-todo-form')
   form.addEventListener('submit', async (event) => {
     event.preventDefault()
-    await addTodo(event.target[0].value, event.target[1].value, event.target[2].value, event.target[3].checked).then((res) => {
-      if (res && res.status >= 200 && res.status < 300) {
-        event.target[0].value = ''
-        event.target[1].value = ''
-        event.target[2].value = ''
-        event.target[3].checked = false
+    await addTodo(event.target[0].value, event.target[1].value, event.target[2].value, event.target[3].checked).then(
+      (res) => {
+        if (res && res.status >= 200 && res.status < 300) {
+          event.target[0].value = ''
+          event.target[1].value = ''
+          event.target[2].value = ''
+          event.target[3].checked = false
+        }
       }
-    })
+    )
   })
 
   const deleteBtns = document.querySelectorAll('.delete-btn')
   deleteBtns.forEach((btn) => {
     deleteTodoAddEvent(btn)
   })
-
-  // ********** FUNCTIONS ********** //
-
-  function addAlert(message, type = 'danger') {
-    const alert = document.createElement('div')
-    alert.classList.add('alert')
-    alert.classList.add(`alert-${type}`)
-    alert.innerText = message
-    alerts.appendChild(alert)
-    setTimeout(() => {
-      alert.remove()
-    }, 5000)
-  }
-
-  function deleteTodoAddEvent(btn) {
-    btn.addEventListener('click', (event) => {
-      const id = parseInt(event.target.id.replace('delete-todo-', ''))
-      deleteTodo(id)
-    })
-  }
-
-  async function addTodo(title, content, datetime, important, completed = false) {
-    const payload = {
-      title,
-      content,
-      datetime,
-      important,
-      completed
-    }
-    return await fetch(`${apiUrl}/todos`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(payload)
-    }).then(async (res) => {
-      const resJson = await res.json()
-      if (res.status < 200 || res.status >= 300) {
-        addAlert(resJson.message)
-        return
-      }
-      addAlert('Todo added successfully', 'success')
-      todos.push(resJson)
-      printTodo(resJson)
-      return res
-    })
-  }
-
-  async function deleteTodo(todoId) {
-    await fetch(`${apiUrl}/todos/${todoId}`, {
-      method: 'DELETE'
-    }).then(async (res) => {
-      if (res.status < 200 || res.status >= 300) {
-        const resJson = await res.json()
-        addAlert(resJson.message)
-        return
-      }
-      addAlert('Todo deleted successfully', 'success')
-      todos = todos.filter((e) => e.id !== todoId)
-      unPrintTodo(todoId)
-    })
-  }
-
-  function unPrintTodo(todoId) {
-    document.getElementById(`todo-${todoId}`).remove()
-  }
-
-  function printTodo(todoObject) {
-    const todo = document.createElement('li')
-    const delBtn = document.createElement('button')
-    const checkbox = document.createElement('input')
-    checkbox.setAttribute('type', 'checkbox')
-    checkbox.setAttribute('id', `todo-${todoObject.id}-checkbox`)
-    checkbox.classList.add('form-check-input')
-    checkbox.classList.add('todo-checkbox')
-    checkbox.checked = todoObject.completed
-    checkbox.addEventListener('change', async (event) => {
-      const id = parseInt(event.target.id.replace('todo-', '').replace('-checkbox', ''))
-      checkTodo(id)
-    })
-    // <input class="form-check-input" type="checkbox" value="" id="flexCheckDisabled" disabled>
-    delBtn.innerText = 'Delete'
-    delBtn.classList.add('btn')
-    delBtn.classList.add('btn-danger')
-    delBtn.classList.add('delete-btn')
-    delBtn.classList.add('delete-btn')
-    delBtn.setAttribute('id', `delete-todo-${todoObject.id}`)
-    deleteTodoAddEvent(delBtn)
-    todo.setAttribute('id', `todo-${todoObject.id}`)
-    todo.innerText = todoObject.title
-    todo.appendChild(checkbox)
-    todo.appendChild(delBtn)
-    todo.classList.add('todo')
-    if (todoObject.completed) todo.classList.add('completed')
-    if (todoObject.important) todo.classList.add('important')
-    todoList.appendChild(todo)
-  }
-
-  async function checkTodo (id) {
-  const todo = todos.find((e) => e.id === id)
-    todo.completed = !todo.completed
-    await fetch(`${apiUrl}/todos/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(todo)
-    }).then(async (res) => {
-      const resJson = await res.json()
-      if (res.status < 200 || res.status >= 300) {
-        addAlert(resJson.message)
-        return
-      }
-      const todo = todos.find((e) => e.id === resJson.id)
-      todo.completed = resJson.completed
-      const todoElement = document.getElementById(`todo-${resJson.id}`)
-      if (resJson.completed) {
-        todoElement.classList.add('completed')
-        addAlert('Todo successfully checked', 'success')
-      } else {
-        todoElement.classList.remove('completed')
-        addAlert('Todo successfully unchecked', 'success')
-      }
-    })
-  }
 })
