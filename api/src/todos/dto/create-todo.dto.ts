@@ -8,7 +8,7 @@ export class CreateTodoDto {
   content: string
 
   @IsNotEmpty()
-  date: Date
+  datetime: Date
 
   @IsNotEmpty()
   important: boolean

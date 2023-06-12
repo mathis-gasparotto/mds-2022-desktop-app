@@ -3,7 +3,7 @@ addEventListener('DOMContentLoaded', async () => {
 
   const promise = await fetch(`${apiUrl}/todos`)
   var todos = await promise.json()
-  console.log(todos)
+  
   // var todos = [
   //   {
   //     id: 1,
@@ -81,16 +81,36 @@ addEventListener('DOMContentLoaded', async () => {
   }
 
   function addTodo(title, content, datetime, important, completed = false) {
-    const todo = {
-      id: getLastTodo().id + 1,
+    // const todo = {
+    //   id: getLastTodo().id + 1,
+    //   title,
+    //   content,
+    //   datetime,
+    //   important,
+    //   completed
+    // }
+    // todos.push(todo)
+    // printTodo(todo)
+    const payload = {
       title,
       content,
       datetime,
       important,
       completed
     }
-    todos.push(todo)
-    printTodo(todo)
+    fetch(`${apiUrl}/todos`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(async (res) => {
+      const todo = await res.json()
+      console.log(todo)
+      todos.push(todo)
+      printTodo(todo)
+    })
+    
   }
 
   function deleteTodo(todoId) {
@@ -121,7 +141,7 @@ addEventListener('DOMContentLoaded', async () => {
     todoList.appendChild(todo)
   }
 
-  function getLastTodo() {
-    return todos[todos.length - 1]
-  }
+  // function getLastTodo() {
+  //   return todos[todos.length - 1]
+  // }
 })

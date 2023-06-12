@@ -13,7 +13,7 @@ export class Todo {
   content!: string
 
   @Column({ type: 'datetime' })
-  date!: Date
+  datetime!: Date
 
   @Column({ type: 'boolean', default: false })
   important!: boolean
