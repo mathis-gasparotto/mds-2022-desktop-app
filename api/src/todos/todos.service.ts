@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import {
+  Injectable,
+  NotFoundException,
+  HttpException,
+  HttpStatus
+} from '@nestjs/common'
 import { CreateTodoDto } from './dto/create-todo.dto'
 import { UpdateTodoDto } from './dto/update-todo.dto'
 import { Todo } from './entities/todo.entity'
@@ -9,7 +14,15 @@ import { Repository } from 'typeorm'
 export class TodosService {
   constructor(@InjectRepository(Todo) private data: Repository<Todo>) {}
 
-  create(createTodoDto: CreateTodoDto): Promise<Todo> {
+  async create(createTodoDto: CreateTodoDto): Promise<Todo> {
+    const todos = await this.findAll()
+    // console.log(this.data.exist(createTodoDto))
+    if (todos.filter((todo) => todo.title === createTodoDto.title).length > 0) {
+      throw new HttpException(
+        `${createTodoDto.title} is already exist`,
+        HttpStatus.UNPROCESSABLE_ENTITY
+      )
+    }
     return this.data.save(createTodoDto)
   }
 
@@ -32,9 +45,8 @@ export class TodosService {
   }
 
   async remove(id: number): Promise<void> {
-    const done = await this.data.delete(id)
-    if (done.affected != 1) {
-      throw new NotFoundException(id)
+    if ((await this.data.delete(id)).affected != 1) {
+      throw new NotFoundException(`Not fount entity for id ${id}`)
     }
   }
 }

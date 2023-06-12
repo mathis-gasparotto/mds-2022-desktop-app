@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete
-} from '@nestjs/common'
+import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common'
 import { TodosService } from './todos.service'
 import { CreateTodoDto } from './dto/create-todo.dto'
 import { UpdateTodoDto } from './dto/update-todo.dto'
@@ -50,7 +42,7 @@ export class TodosController {
     description: 'The record has been successfully created.',
     type: UpdateTodoDto
   })
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateTodoDto: UpdateTodoDto) {
     return this.todosService.update(+id, updateTodoDto)
   }
