@@ -16,6 +16,10 @@ export function dateTimeToInput(datetime) {
   let d = new Date(datetime)
   return `${d.getFullYear()}-${(d.getMonth() + 1) >= 10 ? (d.getMonth() + 1) : '0' + (d.getMonth() + 1)}-${d.getDate() >= 10 ? d.getDate() : '0' + d.getDate()}T${d.getHours() >= 10 ? d.getHours() : '0' + d.getHours()}:${d.getMinutes() >= 10 ? d.getMinutes() : '0' + d.getMinutes()}`
 }
+export function displayDateTime(datetime) {
+  let d = new Date(datetime)
+  return `${d.getDate() >= 10 ? d.getDate() : '0' + d.getDate()}/${(d.getMonth() + 1) >= 10 ? (d.getMonth() + 1) : '0' + (d.getMonth() + 1)}/${d.getFullYear()} ${d.getHours() >= 10 ? d.getHours() : '0' + d.getHours()}:${d.getMinutes() >= 10 ? d.getMinutes() : '0' + d.getMinutes()}`
+}
 export function maxStringLenght(str, max) {
   return str.length > max ? str.substring(0, max) + '...' : str
 }
