@@ -1,25 +1,27 @@
-#todos {
-  list-style: none;
-  border-right: solid 1px #ccc;
-  height: 100vh;
-  width: 300px;
-  margin: 0;
+.todos {
   overflow-y: auto;
-}
-
-.todo {
-  padding: 5px 0;
-  &.important {
-    color: red;
-    font-weight: bold;
-  }
-
-  &.completed {
-    text-decoration: line-through;
-  }
-
-  .delete-btn {
-    font-size: 0.8rem;
-    margin-left: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  padding: 10px;
+  max-height: 80vh;
+  &-card {
+    &.important {
+      background-color: #0831ff;
+      color: #fff;
+      .card {
+        &-title {
+          font-weight: bold;
+        }
+      }
+    }
+    
+    &.completed {
+      .card {
+        &-title {
+          text-decoration: line-through;
+        }
+      }
+    }
   }
 }

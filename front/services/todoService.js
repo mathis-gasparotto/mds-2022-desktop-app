@@ -11,10 +11,17 @@ export async function getTodos() {
   return todos
 }
 
-export function deleteTodoAddEvent(btn) {
+function deleteTodoAddEvent(btn) {
   btn.addEventListener('click', (event) => {
     const id = parseInt(event.target.id.replace('delete-todo-', ''))
     deleteTodo(id)
+  })
+}
+
+function editTodoAddEvent(btn) {
+  btn.addEventListener('click', (event) => {
+    const id = parseInt(event.target.id.replace('edit-todo-', ''))
+    editTodo(id)
   })
 }
 
@@ -45,8 +52,8 @@ export async function addTodo(title, content, datetime, important, completed = f
   })
 }
 
-export async function deleteTodo(todoId) {
-  await fetch(`${apiUrl}/todos/${todoId}`, {
+export function deleteTodo(todoId) {
+  fetch(`${apiUrl}/todos/${todoId}`, {
     method: 'DELETE'
   }).then(async (res) => {
     if (res.status < 200 || res.status >= 300) {
@@ -60,14 +67,25 @@ export async function deleteTodo(todoId) {
   })
 }
 
+export function editTodo(todoId) {
+  console.log(todoId)
+}
+
 export function unPrintTodo(todoId) {
   document.getElementById(`todo-${todoId}`).remove()
 }
 
 export function printTodo(todoObject) {
-  const todo = document.createElement('li')
+  const todoCard = document.createElement('div')
+  const cardBody = document.createElement('div')
+  const todoTitle = document.createElement('h5')
+  const todoDate = document.createElement('h6')
+  const cardText = document.createElement('p')
+
   const delBtn = document.createElement('button')
+  const editBtn = document.createElement('button')
   const checkbox = document.createElement('input')
+
   checkbox.setAttribute('type', 'checkbox')
   checkbox.setAttribute('id', `todo-${todoObject.id}-checkbox`)
   checkbox.classList.add('form-check-input')
@@ -77,21 +95,52 @@ export function printTodo(todoObject) {
     const id = parseInt(event.target.id.replace('todo-', '').replace('-checkbox', ''))
     checkTodo(id)
   })
+
   delBtn.innerText = 'Delete'
   delBtn.classList.add('btn')
   delBtn.classList.add('btn-danger')
   delBtn.classList.add('delete-btn')
-  delBtn.classList.add('delete-btn')
+  delBtn.classList.add('card-link')
   delBtn.setAttribute('id', `delete-todo-${todoObject.id}`)
+  delBtn.setAttribute('type', 'button')
   deleteTodoAddEvent(delBtn)
-  todo.setAttribute('id', `todo-${todoObject.id}`)
-  todo.innerText = maxStringLenght(todoObject.title, 20)
-  todo.appendChild(checkbox)
-  todo.appendChild(delBtn)
-  todo.classList.add('todo')
-  if (todoObject.completed) todo.classList.add('completed')
-  if (todoObject.important) todo.classList.add('important')
-  todoList.appendChild(todo)
+  
+  editBtn.innerText = 'Edit'
+  editBtn.classList.add('btn')
+  editBtn.classList.add('btn-success')
+  editBtn.classList.add('edit-btn')
+  editBtn.classList.add('card-link')
+  editBtn.setAttribute('id', `edit-todo-${todoObject.id}`)
+  editBtn.setAttribute('type', 'button')
+  editTodoAddEvent(editBtn)
+
+  todoCard.setAttribute('id', `todo-${todoObject.id}`)
+  todoCard.classList.add('card')
+  todoCard.classList.add('todos-card')
+  cardBody.classList.add('card-body')
+  todoCard.appendChild(cardBody)
+
+  todoTitle.classList.add('card-title')
+  todoTitle.innerText = maxStringLenght(todoObject.title, 20)
+
+  todoDate.classList.add('card-subtitle')
+  todoDate.classList.add('mb-2')
+  if (!todoObject.important) todoDate.classList.add('text-muted')
+  todoDate.innerText = todoObject.datetime
+  
+  cardText.classList.add('card-text')
+  cardText.innerText = todoObject.content
+  
+  cardBody.appendChild(checkbox)
+  cardBody.appendChild(todoTitle)
+  cardBody.appendChild(todoDate)
+  cardBody.appendChild(cardText)
+  cardBody.appendChild(delBtn)
+  cardBody.appendChild(editBtn)
+
+  if (todoObject.completed) todoCard.classList.add('completed')
+  if (todoObject.important) todoCard.classList.add('important')
+  todoList.appendChild(todoCard)
 }
 
 export async function checkTodo(id) {

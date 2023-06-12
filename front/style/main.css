@@ -1,25 +1,20 @@
-#todos {
-  list-style: none;
-  border-right: solid 1px #ccc;
-  height: 100vh;
-  width: 300px;
-  margin: 0;
+.todos {
   overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  padding: 10px;
+  max-height: 80vh;
 }
-
-.todo {
-  padding: 5px 0;
+.todos-card.important {
+  background-color: #0831ff;
+  color: #fff;
 }
-.todo.important {
-  color: red;
+.todos-card.important .card-title {
   font-weight: bold;
 }
-.todo.completed {
+.todos-card.completed .card-title {
   text-decoration: line-through;
-}
-.todo .delete-btn {
-  font-size: 0.8rem;
-  margin-left: 10px;
 }
 
 .form {
@@ -37,4 +32,16 @@
   position: fixed;
   top: 15px;
   right: 15px;
+}
+
+.navbar {
+  list-style: none;
+  border-right: solid 1px #ccc;
+  height: 100vh;
+  width: 300px;
+  margin: 0;
+  overflow-y: auto;
+}
+.navbar-nav {
+  flex-direction: column !important;
 }/*# sourceMappingURL=main.css.map */
