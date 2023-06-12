@@ -3,7 +3,9 @@ addEventListener('DOMContentLoaded', async () => {
 
   const promise = await fetch(`${apiUrl}/todos`)
   var todos = await promise.json()
-  
+
+  const alerts = document.getElementById('alerts')
+
   // var todos = [
   //   {
   //     id: 1,
@@ -56,9 +58,9 @@ addEventListener('DOMContentLoaded', async () => {
   // ********** EVENT LISTENERS ********** //
 
   const form = document.getElementById('create-todo-form')
-  form.addEventListener('submit', (event) => {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault()
-    addTodo(event.target[0].value, event.target[1].value, event.target[2].value, event.target[3].checked)
+    await addTodo(event.target[0].value, event.target[1].value, event.target[2].value, event.target[3].checked)
     event.target[0].value = ''
     event.target[1].value = ''
     event.target[2].value = ''
@@ -72,6 +74,17 @@ addEventListener('DOMContentLoaded', async () => {
 
   // ********** FUNCTIONS ********** //
 
+  function addAlert(message, type = 'danger') {
+    const alert = document.createElement('div')
+    alert.classList.add('alert')
+    alert.classList.add(`alert-${type}`)
+    alert.innerText = message
+    alerts.appendChild(alert)
+    setTimeout(() => {
+      alert.remove()
+    }, 5000)
+  }
+
   function deleteTodoAddEvent(btn) {
     btn.addEventListener('click', (event) => {
       const id = parseInt(event.target.id.replace('delete-todo-', ''))
@@ -80,17 +93,7 @@ addEventListener('DOMContentLoaded', async () => {
     })
   }
 
-  function addTodo(title, content, datetime, important, completed = false) {
-    // const todo = {
-    //   id: getLastTodo().id + 1,
-    //   title,
-    //   content,
-    //   datetime,
-    //   important,
-    //   completed
-    // }
-    // todos.push(todo)
-    // printTodo(todo)
+  async function addTodo(title, content, datetime, important, completed = false) {
     const payload = {
       title,
       content,
@@ -98,19 +101,21 @@ addEventListener('DOMContentLoaded', async () => {
       important,
       completed
     }
-    fetch(`${apiUrl}/todos`, {
+    await fetch(`${apiUrl}/todos`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(payload)
     }).then(async (res) => {
-      const todo = await res.json()
-      console.log(todo)
-      todos.push(todo)
-      printTodo(todo)
+      const resJson = await res.json()
+      if (res.status !== 200) {
+        addAlert(resJson.message)
+        return
+      }
+      todos.push(resJson)
+      printTodo(resJson)
     })
-    
   }
 
   function deleteTodo(todoId) {
@@ -140,8 +145,4 @@ addEventListener('DOMContentLoaded', async () => {
     if (todoObject.important) todo.classList.add('important')
     todoList.appendChild(todo)
   }
-
-  // function getLastTodo() {
-  //   return todos[todos.length - 1]
-  // }
 })
