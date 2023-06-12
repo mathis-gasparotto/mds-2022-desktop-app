@@ -1,46 +1,51 @@
-addEventListener('DOMContentLoaded', () => {
-  var todos = [
-    {
-      id: 1,
-      title: 'Test',
-      content: '',
-      datetime: new Date(),
-      important: false,
-      completed: false
-    },
-    {
-      id: 2,
-      title: 'Test',
-      content: '',
-      datetime: new Date(),
-      important: false,
-      completed: false
-    },
-    {
-      id: 3,
-      title: 'Test',
-      content: '',
-      datetime: new Date(),
-      important: false,
-      completed: false
-    },
-    {
-      id: 4,
-      title: 'Test',
-      content: '',
-      datetime: new Date(),
-      important: false,
-      completed: false
-    },
-    {
-      id: 5,
-      title: 'Test',
-      content: '',
-      datetime: new Date(),
-      important: false,
-      completed: false
-    }
-  ]
+addEventListener('DOMContentLoaded', async () => {
+  const apiUrl = 'http://localhost:3000'
+
+  const promise = await fetch(`${apiUrl}/todos`)
+  var todos = await promise.json()
+  console.log(todos)
+  // var todos = [
+  //   {
+  //     id: 1,
+  //     title: 'Test',
+  //     content: '',
+  //     datetime: new Date(),
+  //     important: false,
+  //     completed: false
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'Test',
+  //     content: '',
+  //     datetime: new Date(),
+  //     important: false,
+  //     completed: false
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'Test',
+  //     content: '',
+  //     datetime: new Date(),
+  //     important: false,
+  //     completed: false
+  //   },
+  //   {
+  //     id: 4,
+  //     title: 'Test',
+  //     content: '',
+  //     datetime: new Date(),
+  //     important: false,
+  //     completed: false
+  //   },
+  //   {
+  //     id: 5,
+  //     title: 'Test',
+  //     content: '',
+  //     datetime: new Date(),
+  //     important: false,
+  //     completed: false
+  //   }
+  // ]
 
   const todoList = document.getElementById('todos')
 
@@ -64,8 +69,6 @@ addEventListener('DOMContentLoaded', () => {
   deleteBtns.forEach((btn) => {
     deleteTodoAddEvent(btn)
   })
-
-
 
   // ********** FUNCTIONS ********** //
 
