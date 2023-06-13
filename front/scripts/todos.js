@@ -1,4 +1,3 @@
-import { showModal } from '../plugins/modal.js'
 import { getTodos, printTodo } from '../services/todoService.js'
 
 addEventListener('DOMContentLoaded', async () => {

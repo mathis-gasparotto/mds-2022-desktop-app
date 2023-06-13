@@ -44,11 +44,10 @@ export async function addTodo(title, content, datetime, important, completed = f
     const resJson = await res.json()
     if (res.status < 200 || res.status >= 300) {
       addAlert(resJson.message)
-      return
+      return res
     }
     addAlert('Todo added successfully', 'success')
     todos.push(resJson)
-    printTodo(resJson)
     return res
   })
 }
@@ -209,8 +208,10 @@ function updateTodo (todoId, payload) {
     todoElement.querySelector('.card-subtitle').innerText = displayDateTime(resJson.datetime)
     todoElement.querySelector('.card-text').innerText = resJson.content
     if (resJson.important) {
+      todoElement.querySelector('.card-subtitle').classList.remove('text-muted')
       todoElement.classList.add('important')
     } else {
+      todoElement.querySelector('.card-subtitle').classList.add('text-muted')
       todoElement.classList.remove('important')
     }
     return res
