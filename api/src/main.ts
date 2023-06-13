@@ -14,7 +14,6 @@ async function bootstrap() {
     .setTitle('Pizza API')
     .setDescription('The Pizza API description')
     .setVersion('1.0')
-    .addTag('pizzas')
     .build()
 
   const document = SwaggerModule.createDocument(app, config)

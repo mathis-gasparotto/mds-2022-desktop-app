@@ -2,10 +2,10 @@ import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common'
 import { TodosService } from './todos.service'
 import { CreateTodoDto } from './dto/create-todo.dto'
 import { UpdateTodoDto } from './dto/update-todo.dto'
-import { ApiOperation } from '@nestjs/swagger'
-import { ApiCreatedResponse } from '@nestjs/swagger'
+import { ApiOperation, ApiCreatedResponse, ApiTags } from '@nestjs/swagger'
 
 @Controller('todos')
+@ApiTags('todos')
 export class TodosController {
   constructor(private readonly todosService: TodosService) {}
 

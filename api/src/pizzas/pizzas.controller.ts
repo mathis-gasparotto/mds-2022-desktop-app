@@ -10,10 +10,10 @@ import {
 import { PizzasService } from './pizzas.service'
 import { CreatePizzaDto } from './dto/create-pizza.dto'
 import { UpdatePizzaDto } from './dto/update-pizza.dto'
-import { ApiOperation } from '@nestjs/swagger'
-import { ApiCreatedResponse } from '@nestjs/swagger'
+import { ApiOperation, ApiCreatedResponse, ApiTags } from '@nestjs/swagger'
 
 @Controller('pizzas')
+@ApiTags('pizzas')
 export class PizzasController {
   constructor(private readonly pizzasService: PizzasService) {}
 

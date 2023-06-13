@@ -1,9 +1,9 @@
 import { Controller, Get } from '@nestjs/common'
 import { TodosService } from './todos.service'
-import { ApiOperation } from '@nestjs/swagger'
-import { ApiCreatedResponse } from '@nestjs/swagger'
+import { ApiOperation, ApiCreatedResponse, ApiTags } from '@nestjs/swagger'
 
 @Controller('todos')
+@ApiTags('todos')
 export class TodosCountsController {
   constructor(private readonly todosService: TodosService) {}
 
