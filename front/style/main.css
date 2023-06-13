@@ -68,4 +68,9 @@
 }
 .navbar-nav {
   flex-direction: column !important;
+}
+
+.index-content-container {
+  overflow-y: auto;
+  height: 100vh;
 }/*# sourceMappingURL=main.css.map */

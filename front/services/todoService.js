@@ -317,3 +317,43 @@ export async function checkTodo(id) {
     }
   })
 }
+export async function getTodosCount() {
+  const promise = await fetch(`${apiUrl}/todos/count`)
+  const res = await promise.json()
+  return res
+}
+export async function getCompletedTodosCount() {
+  const promise = await fetch(`${apiUrl}/todos/completed/count`)
+  const res = await promise.json()
+  return res
+}
+export async function getUncompletedTodosCount() {
+  const promise = await fetch(`${apiUrl}/todos/uncompleted/count`)
+  const res = await promise.json()
+  return res
+}
+export async function getImportantTodosCount() {
+  const promise = await fetch(`${apiUrl}/todos/important/count`)
+  const res = await promise.json()
+  return res
+}
+export async function getNotImportantTodosCount() {
+  const promise = await fetch(`${apiUrl}/todos/not-important/count`)
+  const res = await promise.json()
+  return res
+}
+export async function getPastTodosCount() {
+  const promise = await fetch(`${apiUrl}/todos/past/count`)
+  const res = await promise.json()
+  return res
+}
+export async function getTodayTodosCount() {
+  const promise = await fetch(`${apiUrl}/todos/today/count`)
+  const res = await promise.json()
+  return res
+}
+export async function getFuturTodosCount() {
+  const promise = await fetch(`${apiUrl}/todos/futur/count`)
+  const res = await promise.json()
+  return res
+}
